@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist",
-    "dep": "git push && npm run build && npm run deploy"
+    "dep": "git push && npm run build && echo sit-react-nov-29.jigg.win > dist/CNAME && npm run deploy"
   },
   "dependencies": {
     "gh-pages": "^6.3.0",
