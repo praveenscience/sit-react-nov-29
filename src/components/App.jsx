@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <main>
-      <Header dark={darkMode} className="justify-content-center">SIT Workshop</Header>
+      <Header dark={darkMode} className="justify-content-center">SIT Workshop <small>({import.meta.env.MODE})</small></Header>
       <ContainerRow>
         <div className="col-12 my-4">
           <button className="btn btn-primary" onClick={handleMode}>{darkMode ? 'Light' : 'Dark'} Mode</button>
