@@ -1,4 +1,6 @@
+@use "sass:meta";
+
 body {
   font-family: 'Open Sans';
-  @import "components/Bootstrap/Header";
+  @include meta.load-css("components/Bootstrap/Header");
 }
