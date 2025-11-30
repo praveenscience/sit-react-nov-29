@@ -17,9 +17,22 @@ const Users = () => {
             <div className="alert alert-info text-center">Users Loading...</div>
           </>
         ) : (
-          <pre className="bg-light p-1 border rounded">
-            {JSON.stringify({ allUsers }, null, 2)}
-          </pre>
+          <>
+            {allUsers.data.map((user) => (
+              <div className="media" key={user.ID}>
+                <img
+                  src={user.Avatar}
+                  className="mr-3 border p-1 rounded"
+                  height={60}
+                  alt={user.ID}
+                />
+                <div className="media-body">
+                  <h5 className="mb-0 mt-1 display-4">{user.Name}</h5>
+                  <p>{user.ID}</p>
+                </div>
+              </div>
+            ))}
+          </>
         )}
       </div>
     </ContainerRow>

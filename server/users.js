@@ -12,12 +12,12 @@ const users = [
   {
     ID: "rutujavatane27-lab",
     Name: "Rutuja Vatane",
-    Avatar: "https://github.com/rutujavatane27-lab"
+    Avatar: "https://github.com/rutujavatane27-lab.png"
   },
   {
     ID: "sohelkhan006",
     Name: "Sohel Khan",
-    Avatar: "https://github.com/sohelkhan006"
+    Avatar: "https://github.com/sohelkhan006.png"
   }
 ];
 // Define some routes.
