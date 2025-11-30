@@ -9,11 +9,21 @@ const App = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [ghID, setGhID] = useState("");
   const [response, setResponse] = useState(
-    "Please enter a GitHub ID and press Fetch Details.",
+    "Please enter a GitHub ID and press Fetch Details."
   );
   const handleFetchDetails = (e) => {
     e.preventDefault();
-    GetGitHubUserInfo(ghID).then((response) => setResponse(response));
+    GetGitHubUserInfo(ghID)
+      .then((response) => setResponse(response))
+      .catch(() => {
+        setResponse(
+          <>
+            The given GitHub UserID{" "}
+            <code className="bg-light border rounded p-1">{ghID}</code> is
+            invalid.
+          </>
+        );
+      });
   };
   return (
     <main>
@@ -35,21 +45,18 @@ const App = () => {
             <input
               type="submit"
               className="btn btn-primary btn-small"
+              disabled={ghID.trim().length === 0}
               value="Fetch Details"
             />
           </form>
         </div>
         <div className="col-4">
           <h2 className="display-4">Preview</h2>
-          {typeof response === "string" ? (
+          {typeof response.data !== "object" ? (
             <>{response}</>
           ) : (
             <GitHubUserInfo {...response.data} />
           )}
-          <pre>
-            {JSON.stringify({ responseType: typeof response }, null, 2)}
-          </pre>
-          <pre>{JSON.stringify({ response }, null, 2)}</pre>
         </div>
       </ContainerRow>
     </main>
