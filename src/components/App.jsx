@@ -1,64 +1,26 @@
 import { useState } from "react";
 import Header from "./Bootstrap/Header";
-import ContainerRow from "./Bootstrap/ContainerRow";
-import FormGroup from "./Bootstrap/FormGroup";
-import { GetGitHubUserInfo } from "../services/GitHub";
-import GitHubUserInfo from "./GitHubUserInfo";
+import HeaderLinks from "./HeaderLinks";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
+import GitHubUsers from "./Pages/GitHubUsers";
+import Users from "./Pages/Users";
+import E404 from "./Pages/404";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
-  const [ghID, setGhID] = useState("");
-  const [response, setResponse] = useState(
-    "Please enter a GitHub ID and press Fetch Details."
-  );
-  const handleFetchDetails = (e) => {
-    e.preventDefault();
-    GetGitHubUserInfo(ghID)
-      .then((response) => setResponse(response))
-      .catch(() => {
-        setResponse(
-          <>
-            The given GitHub UserID{" "}
-            <code className="bg-light border rounded p-1">{ghID}</code> is
-            invalid.
-          </>
-        );
-      });
-  };
+
   return (
     <main>
-      <Header dark={darkMode} className="justify-content-center">
+      <Header dark={darkMode} items={HeaderLinks}>
         SIT Workshop <small>({import.meta.env.MODE})</small>
       </Header>
-      <ContainerRow className="my-4 GitHubID">
-        <div className="col-8">
-          <h2 className="display-4">Enter your GitHub ID</h2>
-          <form onSubmit={handleFetchDetails}>
-            <FormGroup
-              Label="GitHub ID"
-              Id="GitHubID"
-              Value={ghID}
-              onChange={(e) => {
-                setGhID(e.target.value);
-              }}
-            />
-            <input
-              type="submit"
-              className="btn btn-primary btn-small"
-              disabled={ghID.trim().length === 0}
-              value="Fetch Details"
-            />
-          </form>
-        </div>
-        <div className="col-4">
-          <h2 className="display-4">Preview</h2>
-          {typeof response.data !== "object" ? (
-            <>{response}</>
-          ) : (
-            <GitHubUserInfo {...response.data} />
-          )}
-        </div>
-      </ContainerRow>
+      <Routes>
+        <Route path="/GitHubUsers" element={<GitHubUsers />} />
+        <Route path="/Users" element={<Users />} />
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<E404 />} />
+      </Routes>
     </main>
   );
 };
