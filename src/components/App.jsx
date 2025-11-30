@@ -3,6 +3,7 @@ import Header from "./Bootstrap/Header";
 import ContainerRow from "./Bootstrap/ContainerRow";
 import FormGroup from "./Bootstrap/FormGroup";
 import { GetGitHubUserInfo } from "../services/GitHub";
+import GitHubUserInfo from "./GitHubUserInfo";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -40,6 +41,14 @@ const App = () => {
         </div>
         <div className="col-4">
           <h2 className="display-4">Preview</h2>
+          {typeof response === "string" ? (
+            <>{response}</>
+          ) : (
+            <GitHubUserInfo {...response.data} />
+          )}
+          <pre>
+            {JSON.stringify({ responseType: typeof response }, null, 2)}
+          </pre>
           <pre>{JSON.stringify({ response }, null, 2)}</pre>
         </div>
       </ContainerRow>
