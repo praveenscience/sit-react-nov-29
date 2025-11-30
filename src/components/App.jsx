@@ -1,52 +1,46 @@
+import { useState } from "react";
 import Header from "./Bootstrap/Header";
 import ContainerRow from "./Bootstrap/ContainerRow";
-import { useState } from "react";
+import FormGroup from "./Bootstrap/FormGroup";
+import { GetGitHubUserInfo } from "../services/GitHub";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(true);
-  const [myName, setMyName] = useState("");
-
-  const handleMode = (e) => {
+  const [ghID, setGhID] = useState("");
+  const [response, setResponse] = useState(
+    "Please enter a GitHub ID and press Fetch Details.",
+  );
+  const handleFetchDetails = (e) => {
     e.preventDefault();
-    setDarkMode(!darkMode);
+    GetGitHubUserInfo(ghID).then((response) => setResponse(response));
   };
-
-  const handleChangeName = (e) => {
-    setMyName(e.target.value);
-  };
-
   return (
     <main>
       <Header dark={darkMode} className="justify-content-center">
         SIT Workshop <small>({import.meta.env.MODE})</small>
       </Header>
-      <ContainerRow>
-        <div className="col-12 my-4">
-          <button className="btn btn-primary" onClick={handleMode}>
-            {darkMode ? "Light" : "Dark"} Mode
-          </button>
+      <ContainerRow className="my-4 GitHubID">
+        <div className="col-8">
+          <h2 className="display-4">Enter your GitHub ID</h2>
+          <form onSubmit={handleFetchDetails}>
+            <FormGroup
+              Label="GitHub ID"
+              Id="GitHubID"
+              Value={ghID}
+              onChange={(e) => {
+                setGhID(e.target.value);
+              }}
+            />
+            <input
+              type="submit"
+              className="btn btn-primary btn-small"
+              value="Fetch Details"
+            />
+          </form>
         </div>
-        <div className="col-12 mt-4 mb-2">
-          <p>Controlled Components</p>
-          <input
-            type="text"
-            value={myName}
-            name="text-1"
-            onChange={handleChangeName}
-          />
-        </div>
-        <div className="col-12">
-          <input
-            type="text"
-            value={myName}
-            name="text-2"
-            onChange={handleChangeName}
-          />
-        </div>
-        <div className="col-12 my-4">
-          <pre className="border rounded bg-light p-2">
-            {JSON.stringify({ darkMode, myName }, null, 2)}
-          </pre>
+        <div className="col-4">
+          <h2 className="display-4">Preview</h2>
+          <pre>{JSON.stringify({ response }, null, 2)}</pre>
         </div>
       </ContainerRow>
     </main>
